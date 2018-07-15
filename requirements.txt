@@ -6,3 +6,4 @@ MarkupSafe==1.0
 numpy==1.13.1
 opencv-python==3.4.0.12
 Werkzeug==0.12.2
+gunicorn==19.9.0

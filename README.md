@@ -1,11 +1,11 @@
-
+configuración inicial basada en: https://github.com/dxue2012/python-webcam-flask 
 
 ### Setup
 
 #### Optional
 
-- setup heroku (`brew install heroku`)
-- Use a python virtualenv
+- install heroku cli https://devcenter.heroku.com/articles/heroku-cli
+- Use a python virtualenv: (install virtualenv + virtualenv headmouse + source headmouse/bin/activate) 
 
 #### Required
 - `git clone https://github.com/dxue2012/python-webcam-flask.git`
@@ -24,9 +24,6 @@ IF NOT:
 
 - `git push heroku master`
 - heroku open
-
-### Demo
-[Live Demo](https://python-stream-video.herokuapp.com)
 
 ### Common Issues
 

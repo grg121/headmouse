@@ -6,4 +6,5 @@ class Makeup_artist(object):
         pass
 
     def apply_makeup(self, img):
+        img=img.convert('L')
         return img.transpose(Image.FLIP_LEFT_RIGHT)

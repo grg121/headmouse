@@ -1,3 +1,7 @@
+scrot
+python3-tk
+python3-dev
+python-xlib
 libsm6
 libxext6
 libxrender1

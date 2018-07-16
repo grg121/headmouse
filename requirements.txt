@@ -14,4 +14,6 @@ python3-xlib==0.15
 PyTweening==1.0.3
 six==1.11.0
 Werkzeug==0.12.2
+futures==2.1.6
+trollius==1.0.1
 

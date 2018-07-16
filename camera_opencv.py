@@ -1,4 +1,5 @@
 import cv2
+import pyautogui
 from base_camera import BaseCamera
 
 import numpy as np

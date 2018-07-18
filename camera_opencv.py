@@ -40,7 +40,7 @@ class Camera(BaseCamera):
                 x, y, w, h = face
             else:
                 x, y, w, h = 0, 0, 0, 0
-                
+            
             px = int(x+w/2)
             py = int(y+h/2)
 

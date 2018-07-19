@@ -21,22 +21,18 @@ class Camera(BaseCamera):
     @staticmethod
     def frames():
 
-
         def Draw(obj, img, color):
             x, y, w, h = obj
             cv2.rectangle(img,(x,y),(x+w,y+h),color,2) # average
 
 
         def CenterOf(obj):
-
             x, y, w, h = obj
 
             px = int(x+w/2)
             py = int(y+h/2)
 
             return px,py
-
-
 
 
         camera = cv2.VideoCapture(Camera.video_source)
@@ -58,6 +54,9 @@ class Camera(BaseCamera):
 
         face_buffer = []
 
+        while len(face_buffer) < rate:
+            face_buffer.append([0,0,0,0])
+
         smiling = False
         will_smile = False
 
@@ -74,8 +73,9 @@ class Camera(BaseCamera):
                 current_face = max(detected_faces, key=lambda x:x[2]*x[3]) # bigger face detected
                 face_buffer.append(current_face)
 
-                if len(face_buffer) == rate: # keep buffer size to rate
-                    del face_buffer[0]
+
+                # keep buffer size to rate
+                del face_buffer[0]
 
                 Draw(current_face, img, (0,255,255))
 

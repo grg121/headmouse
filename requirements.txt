@@ -1,3 +1,4 @@
+PyAutoGUI==0.9.36
 click==6.7
 Flask==0.12.2
 freeze==1.0.10
@@ -16,3 +17,5 @@ six==1.11.0
 Werkzeug==0.12.2
 futures==2.1.6
 trollius==1.0.1
+PyAutoGUI==0.9.36
+

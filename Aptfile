@@ -7,5 +7,3 @@ python3-dev
 libsm6
 libxext6
 libxrender1
-libfontconfig1
-libice6

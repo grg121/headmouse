@@ -1,10 +1,33 @@
 <html>
   <head>
-    <title>La cabeza es el ratón</title>
+      <title>La cabeza es el ratón</title>
+      <style>
+       body {
+           background-color: linen;
+       }
+
+       h1 {
+           color: maroon;
+           margin-left: 40px;
+       }
+
+       footer {
+           background-color: #777;
+           padding: 10px;
+           text-align: center;
+           color: white;
+       }
+
+
+      </style>
   </head>
   <body>
-      <h1>La cabeza es el ratón</h1>
-      <img style="width:20%" src="{{ url_for('video_feed') }}">
+      <img  style="width:20%" src="{{ url_for('video_feed') }}">
       <iframe style="width:75% ; height:90%" src="https://sketchfab.com/models/c0655137e3f74adcb9e6f1bc20a25809/embed"></iframe>
+
+      <footer>
+          <p> © Francisco Navarro Morales || <a href="mailto:navarromoralesdev@gmail.com">Navarromoralesdev@gmail.com</a>. || <a href="https://github.com/grg121/headmouse" > Fork on github</a> </p>
+      </footer>
+
   </body>
 </html>

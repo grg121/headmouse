@@ -1,13 +1,15 @@
+
+import sys
 import cv2
 import pyautogui
 from base_camera import BaseCamera
-
 import numpy as np
 # multiple cascades: https://github.com/Itseez/opencv/tree/master/data/haarcascades
 
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
 smile_cascade = cv2.CascadeClassifier('haarcascade_smile.xml')
+
 
 pyautogui.FAILSAFE = False
 
@@ -20,6 +22,9 @@ class Camera(BaseCamera):
 
     @staticmethod
     def frames():
+
+        def ClickDown(img,color):
+            cv2.rectangle(img,(0,0),(img.shape[1],img.shape[0]),color,15) # average
 
         def Draw(obj, img, color):
             x, y, w, h = obj
@@ -57,9 +62,6 @@ class Camera(BaseCamera):
         while len(face_buffer) < rate:
             face_buffer.append([0,0,0,0])
 
-        smiling = False
-        will_smile = False
-
         while True:
             # read current frame
 
@@ -68,11 +70,10 @@ class Camera(BaseCamera):
             img =  cv2.flip( img, 1 )
             grayscale = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-            detected_faces = face_cascade.detectMultiScale(grayscale, 1.3, 5)
+            detected_faces = face_cascade.detectMultiScale(grayscale, 1.4, 5)
             if len(detected_faces) > 0:
                 current_face = max(detected_faces, key=lambda x:x[2]*x[3]) # bigger face detected
                 face_buffer.append(current_face)
-
 
                 # keep buffer size to rate
                 del face_buffer[0]
@@ -81,32 +82,15 @@ class Camera(BaseCamera):
 
                 x,y,w,h = current_face
 
-                roi_gray = grayscale[y:y+h, x:x+w]
-                roi_color = img[y:y+h, x:x+w]
+                roi_gray = grayscale[y+int(h/2):y+h, x:x+w]
+                roi_color = img[y+int(h/2):y+h, x:x+w]
 
-                smiles = smile_cascade.detectMultiScale(roi_gray, 1.6,15)
+                detected_smiles = smile_cascade.detectMultiScale(roi_gray, 1.4, 9)
 
-                will_simile = len(smiles) > 0
-
-                if smiling:
-                    pyautogui.mouseDown()
-                    pyautogui.mouseDown()
-                    pyautogui.mouseUp()
-                """
-                if smiling and not will_smile:
-                    pyautogui.mouseUp()
-                    cv2.putText(img,"up",(10,150), font , 2,(255,255,255),2,cv2.LINE_AA)
-                if not smiling and will_smile:
-                    pyautogui.mouseDown()
-                    cv2.putText(img,"down",(10,150), font , 2,(255,255,255),2,cv2.LINE_AA)
-
-                """
-
-                smiling = will_smile
-
-                for (sx,sy,sw,sh) in smiles:
-                    cv2.rectangle(roi_color,(sx,sy),(sx+sw,sy+sh),(0,255,0),2)
-
+                if len(detected_smiles) > 0:
+                    smile = max(detected_smiles, key=lambda x:x[2]*x[3]) # bigger face detected
+                    Draw(smile, roi_color, (6,6,6))
+                    ClickDown(img,(255,0,0))
 
 
             average_face = np.mean(face_buffer, axis=0) # get average parameters of buffer faces

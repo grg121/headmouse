@@ -1,5 +1,6 @@
 
 import sys
+import keyboard
 import cv2
 import pyautogui
 from base_camera import BaseCamera
@@ -59,6 +60,7 @@ class Camera(BaseCamera):
 
         face_buffer = []
 
+
         while len(face_buffer) < rate:
             face_buffer.append([0,0,0,0])
 
@@ -85,12 +87,6 @@ class Camera(BaseCamera):
                 roi_gray = grayscale[y+int(h/2):y+h, x:x+w]
                 roi_color = img[y+int(h/2):y+h, x:x+w]
 
-                detected_smiles = smile_cascade.detectMultiScale(roi_gray, 1.4, 9)
-
-                if len(detected_smiles) > 0:
-                    smile = max(detected_smiles, key=lambda x:x[2]*x[3]) # bigger face detected
-                    Draw(smile, roi_color, (6,6,6))
-                    ClickDown(img,(255,0,0))
 
 
             average_face = np.mean(face_buffer, axis=0) # get average parameters of buffer faces
@@ -112,7 +108,25 @@ class Camera(BaseCamera):
 
             font = cv2.FONT_HERSHEY_SIMPLEX
 
-            pyautogui.moveRel(-desp_x, -desp_y, duration=0)
+            # pyautogui.moveRel(-desp_x, -desp_y, duration=0)
+
+            vel = 10
+
+            if desp_x > 0:
+                desp_x = vel
+            if desp_x < 0:
+                desp_x = -vel
+
+            pyautogui.moveRel(-desp_x, 0 , duration=0)
+
+            zoom = 1
+
+            zoom_limit = 5
+
+            if desp_y > zoom_limit :
+                pyautogui.scroll(zoom)
+            if desp_y < -zoom_limit :
+                pyautogui.scroll(-zoom)
 
             # encode as a jpeg image and return it
             yield cv2.imencode('.jpg', img)[1].tobytes()
